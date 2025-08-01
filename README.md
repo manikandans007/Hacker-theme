@@ -16,7 +16,3 @@ FADEVEIL is a themed hacker-style webpage featuring a Matrix animation, typewrit
 ## How to Use
 
 Just open `index.html` in any browser.
-
-## Preview
-
-![screenshot](screenshot.png)
