@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>There is no such thing as a secure system.</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: black;
+            color: lime;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding-left: 20px;
+            padding-top: 50px;
+        }
+
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: -1;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: lime;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em;
+            z-index: 10;
+        }
+
+        #fadeveil-title {
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 0 0 5px lime, 0 0 10px lime;
+            opacity: 0;
+            animation: fadeIn 2s forwards, glitch 1s infinite alternate;
+        }
+
+        #subtitle {
+            font-size: 1em;
+            opacity: 0;
+            margin-top: 10px;
+            color: #0f0;
+            animation: fadeIn 3s 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0 0 5px lime, 0 0 10px lime; }
+            50% { text-shadow: 0 0 10px red, 0 0 15px blue; transform: scale(1.02); }
+            100% { text-shadow: 0 0 5px lime, 0 0 10px lime; }
+        }
+
+        .btn {
+            display: block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #00FF00;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #007700;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading-screen">
+    <div id="fadeveil-title"></div>
+    <div id="subtitle"></div>
+</div>
+
+<canvas id="matrix"></canvas>
+
+<h1 id="main-title"></h1>
+<h2 id="status-message"></h2>
+<p id="log"></p>
+<button class="btn" id="start-attack-btn">Initiate Strike on Target</button>
+
+<script>
+    // Typewriter Effect
+    function typeWriterEffect(element, text, delay, callback) {
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, delay);
+            } else if (callback) {
+                callback();
+            }
+        }
+        type();
+    }
+
+    // Start Loading Screen Effects
+    setTimeout(() => {
+        const titleElement = document.getElementById('fadeveil-title');
+        const subtitleElement = document.getElementById('subtitle');
+
+        typeWriterEffect(titleElement, "FADEVEIL", 150, () => {
+            typeWriterEffect(subtitleElement, "An Eclipse of Encryption", 100);
+        });
+    }, 500);
+
+    // Hide Loading Screen
+    setTimeout(() => {
+        document.getElementById('loading-screen').style.display = 'none';
+    }, 5000);
+
+    // Apply Typewriter Effect to Title and Status Message
+    setTimeout(() => {
+        typeWriterEffect(document.getElementById('main-title'), "There is no such thing as a secure system.", 100);
+    }, 5100);
+
+    setTimeout(() => {
+        typeWriterEffect(document.getElementById('status-message'), "Welcome To Anonymous State", 100);
+    }, 5500);
+
+    // Matrix Effect
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()";
+    const matrix = letters.split("");
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = matrix[Math.floor(Math.random() * matrix.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    document.getElementById('start-attack-btn').addEventListener('click', () => {
+        let log = document.getElementById('log');
+        log.innerHTML = "Scanning target through dark web...<br>";
+        let emails = ["admin@darkmail.com", "root@anonymous.net", "hacker@deepweb.org", "target@unknown.com", 
+            "access@vault.net", "breach@security.net", "shadow@cybermail.com", "phantom@hackers.org",
+            "stealth@infiltrator.net", "ghost@underground.info", "darknet@secrecy.com", "cipher@matrixmail.net",
+            "exploit@breachvault.com", "seeker@hiddenpath.org", "whisper@shadownetwork.net", "rogue@datapirate.com",
+            "observer@backdoor.org", "zero@blackhat.net", "sniper@redteam.com", "sentinel@opsec.info",
+            "cloak@invisibleweb.net", "hunter@penetrationlabs.com", "pioneer@anonymail.net", "warden@firewallsecurity.com",
+            "ms11042001@gmail.com"];
+        let index = 0;
+        let interval = setInterval(() => {
+            log.innerHTML += "Searching: " + emails[index] + "<br>";
+            index++;
+            if (index >= emails.length) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    log.innerHTML += "<strong>Geographical location found: 51.5074° N, 0.1278° W</strong><br>";
+                    log.innerHTML += "<strong>TARGET FOUND!</strong>";
+                }, 1000);
+            }
+        }, 1000);
+    });
+</script>
+
+</body>
+</html>
